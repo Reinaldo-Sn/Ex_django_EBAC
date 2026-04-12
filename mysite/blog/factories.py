@@ -8,16 +8,17 @@ from blog.models import Post
 
 faker = FakerFactory.create()
 
+
 class UserFactory(factory.django.DjangoModelFactory):
     class Meta:
         model = User
 
-    email = factory.Faker('safe_email')
+    email = factory.Faker("safe_email")
     username = factory.LazyAttribute(lambda x: faker.name())
 
     @classmethod
     def _prepare(cls, create, **kwargs):
-        password = kwargs.pop('password', None)
+        password = kwargs.pop("password", None)
         user = super(UserFactory, cls)._prepare(create, **kwargs)
         if password:
             user.set_password(password)
@@ -30,8 +31,8 @@ class PostFactory(factory.django.DjangoModelFactory):
     class Meta:
         model = Post
 
-    title = factory.Faker('sentence', nb_words=5)
-    slug = factory.Faker('slug')
+    title = factory.Faker("sentence", nb_words=5)
+    slug = factory.Faker("slug")
     author = factory.SubFactory(UserFactory)
-    content = factory.Faker('paragraph')
+    content = factory.Faker("paragraph")
     status = 1
